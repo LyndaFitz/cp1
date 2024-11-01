@@ -1,0 +1,112 @@
+/* reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+   
+    line-height: 1.6;
+    background: linear-gradient(to right, #f8d3e6, #c3e8f4);
+    
+    color: #333;
+}
+
+
+header {
+    background: #ff77a0;
+    
+    color: white;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-size: 3rem;
+    font-family: 'Rubik', cursive;
+    transition: transform 0.3s ease;
+}
+
+.title:hover {
+    transform: scale(1.1);
+    /* Enlarges title on hover */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffe4e1;
+    /* Light color on hover */
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.gif-container {
+    margin-bottom: 20px;
+}
+
+.animated-gif {
+    width: 200px;
+    /* Adjust width as needed */
+    animation: move 1.5s infinite alternate;
+    /* Animation to move the GIF */
+}
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+section {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
+    
+}
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #ff77a0;
+    /* Soft pink */
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
