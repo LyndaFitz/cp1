@@ -6,109 +6,56 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-   
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    background: linear-gradient(to right, #f8d3e6, #c3e8f4);
-    
-    color: #333;
+    background: linear-gradient(to right, #f0e4ff, #c3d9e0);
+    color: #5a4c85;
+    overflow-x: hidden;
 }
 
-
-header {
-    background: #ff77a0;
-    
-    color: white;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.title {
-    font-size: 3rem;
-    font-family: 'Rubik', cursive;
-    transition: transform 0.3s ease;
-}
-
-.title:hover {
-    transform: scale(1.1);
-    /* Enlarges title on hover */
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: #ffe4e1;
-    /* Light color on hover */
-}
-
-/* Main Content */
-main {
-    padding: 20px;
-    text-align: center;
-}
-
-.gif-container {
+h1 {
+    color: #ff77b1;
+    text-shadow: 2px 2px 5px rgba(255, 119, 177, 0.7);
     margin-bottom: 20px;
+    font-size: 3rem;
+    animation: glow 1.5s infinite alternate;
 }
 
-.animated-gif {
-    width: 200px;
-    /* Adjust width as needed */
-    animation: move 1.5s infinite alternate;
-    /* Animation to move the GIF */
-}
-
-@keyframes move {
+@keyframes glow {
     0% {
-        transform: translateY(0);
+        text-shadow: 0 0 5px #ff77b1, 0 0 10px #ff77b1, 0 0 15px #ff77b1;
     }
 
     100% {
-        transform: translateY(-10px);
+        text-shadow: 0 0 10px #ff77b1, 0 0 20px #ff77b1, 0 0 30px #ff77b1;
     }
 }
 
-section {
+h2 {
+    color: #ff69b4;
     margin: 20px 0;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    
+}
+
+img {
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-section:hover {
-    transform: translateY(-5px);
-    
+.book-gif {
+    width: 50px;
+    animation: bounce 1.5s infinite;
 }
 
+@keyframes bounce {
 
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #ff77a0;
-    /* Soft pink */
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 #feedback {
@@ -116,7 +63,60 @@ footer {
     padding: 20px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s;
+}
+
+#recommendation {
+    transition: opacity 0.5s;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-animation {
+    transition: transform 0.2s;
+}
+
+.button-animation:hover {
+    transform: scale(1.1);
+}
+
+section {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #ff77b1;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+#feedback-display {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #ff69b4;
 }
 
 #feedback-form {

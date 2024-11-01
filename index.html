@@ -7,14 +7,64 @@
     <title>Chapter Chat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        /* reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background: #D5E1EF;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(to right, #f0e4ff, #c3d9e0);
+            color: #5a4c85;
+            overflow-x: hidden;
         }
 
         h1 {
-            color: pink;
-            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.6);
+            color: #ff77b1;
+            text-shadow: 2px 2px 5px rgba(255, 119, 177, 0.7);
+            margin-bottom: 20px;
+            font-size: 3rem;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #ff77b1, 0 0 10px #ff77b1, 0 0 15px #ff77b1;
+            }
+
+            100% {
+                text-shadow: 0 0 10px #ff77b1, 0 0 20px #ff77b1, 0 0 30px #ff77b1;
+            }
+        }
+
+        h2 {
+            color: #ff69b4;
+            margin: 20px 0;
+        }
+
+        img {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-gif {
+            width: 50px;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         #feedback {
@@ -22,7 +72,8 @@
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s;
         }
 
         #recommendation {
@@ -31,6 +82,66 @@
 
         .hidden {
             display: none;
+        }
+
+        .button-animation {
+            transition: transform 0.2s;
+        }
+
+        .button-animation:hover {
+            transform: scale(1.1);
+        }
+
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ff77b1;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        #feedback-display {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+
+        #feedback-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #feedback-form label {
+            margin: 10px 0 5px;
+        }
+
+        #feedback-form input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -42,8 +153,8 @@
         <img src="your-pixel-princess-gif.gif" alt="Princess Reading" class="my-4"
             style="width: 200px; animation: bounce 1s infinite;">
         <section id="books" class="mb-5">
-            <h2>Current Reads</h2>
-            <button id="recommend-btn" class="btn btn-primary">Get a Book Recommendation!</button>
+            <h2>Current Reads <img src="book-gif.gif" alt="Book GIF" class="book-gif"></h2>
+            <button id="recommend-btn" class="btn btn-primary button-animation">Get a Book Recommendation!</button>
             <div id="recommendation" class="mt-3 hidden"></div>
         </section>
         <section id="feedback">
@@ -57,7 +168,7 @@
                     <label for="book-suggestion" class="sr-only">Book Suggestion</label>
                     <input type="text" class="form-control" id="book-suggestion" placeholder="Book Suggestion" required>
                 </div>
-                <button type="submit" class="btn btn-success mb-2">Submit</button>
+                <button type="submit" class="btn btn-success mb-2 button-animation">Submit</button>
             </form>
             <div id="feedback-display" class="mt-3"></div>
         </section>
@@ -75,11 +186,35 @@
         });
 
         document.getElementById('recommend-btn').addEventListener('click', function () {
-            const recommendation = "How about reading 'The Midnight Library' by Matt Haig?";
-            const recommendationDiv = document.getElementById('recommendation');
-            recommendationDiv.textContent = recommendation;
-            recommendationDiv.classList.remove('hidden');
-            recommendationDiv.style.opacity = 1; // Trigger fade-in
+            const genres = ['fiction', 'fantasy', 'mystery', 'romance', 'science fiction', 'adventure'];
+            const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+
+            fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(randomGenre)}&maxResults=1`)
+                .then(response => response.json())
+                .then(data => {
+                    const recommendationDiv = document.getElementById('recommendation');
+                    recommendationDiv.innerHTML = ''; // Clear previous recommendations
+                    if (data.items && data.items.length > 0) {
+                        const book = data.items[0].volumeInfo;
+                        const title = book.title;
+                        const authors = book.authors ? book.authors.join(', ') : 'Unknown Author';
+                        const description = book.description || 'No description available.';
+
+                        recommendationDiv.innerHTML = `
+                            <h3>${title}</h3>
+                            <p><strong>Authors:</strong> ${authors}</p>
+                            <p>${description}</p>
+                        `;
+                    } else {
+                        recommendationDiv.innerHTML = 'No recommendations found.';
+                    }
+                    recommendationDiv.classList.remove('hidden');
+                    recommendationDiv.style.opacity = 1; // Trigger fade-in
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('recommendation').textContent = 'Error fetching book data.';
+                });
         });
     </script>
 </body>
